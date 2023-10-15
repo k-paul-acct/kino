@@ -15,6 +15,11 @@
             <Setter Property="Height" Value="100"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="Margin" Value="10"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+                </Setter.Value>
+            </Setter>
         </Style>
         
         <Style TargetType="StackPanel">
@@ -66,15 +71,6 @@
                     <TextBlock Text="Профиль"/>
                 </StackPanel>
             </Button>
-            
-            <Button x:Name="btnExit"
-                Click="btnExit_Click">
-                <StackPanel >
-                    <Image Source="\Resources\Icons\icon_exit.png" Stretch="Uniform"/>
-                    <TextBlock x:Name="tbBtnExit" Text="Выйти" TextWrapping="Wrap"/>
-                </StackPanel>
-            </Button>
-
         </WrapPanel>
         <Frame x:Name="mainFrame"
                NavigationUIVisibility="Hidden"/>

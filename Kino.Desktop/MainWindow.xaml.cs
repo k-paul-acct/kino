@@ -50,16 +50,11 @@ namespace Kino.Desktop
 
         private void btnToProfilePage_Click(object sender, RoutedEventArgs e)
         {
-            if (Context.IsAuth)
+            if (Context.СurrentUser != null)
             {
                 mainFrame.NavigationService.Navigate(new ProfilePage());
             }
             mainFrame.NavigationService.Navigate(new AuthorizationPage());
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            mainFrame.NavigationService.Navigate(new MovieListPage());
         }
     }
 }

@@ -5,10 +5,65 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Kino.Desktop.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="RegistrationPage">
+      d:DesignHeight="800" d:DesignWidth="1400">
 
-    <Grid>
-        
-    </Grid>
+    <Page.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Page.Resources>
+
+    <DockPanel LastChildFill="False">
+        <Grid DockPanel.Dock="Top"
+          Margin="0,0,0,40">
+            <Image Source="\Resources\Images\normal_breadcrumb.jpg"/>
+            <TextBlock Text="Регистрация"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="60"/>
+        </Grid>
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="400">
+            <TextBox Tag="Логин"
+                     x:Name="tbLogin"/>
+            <Separator Opacity="0" Height="20"/>
+            <TextBox Tag="Почта"
+                     x:Name="tbEmail"/>
+            <Separator Opacity="0" Height="20"/>
+            <Grid>
+                <PasswordBox x:Name="pbPassword1"
+                             LostFocus="pbPassword1_LostFocus"/>
+                <TextBox Tag="Пароль"
+                         x:Name="tbPassword1"
+                         GotFocus="tbPassword1_GotFocus"/>
+            </Grid>
+            <Separator Opacity="0" Height="20"/>
+            <Grid>
+                <PasswordBox x:Name="pbPassword2"
+                             LostFocus="pbPassword2_LostFocus"/>
+                <TextBox Tag="Повтор пароля"
+                         x:Name="tbPassword2"
+                         GotFocus="tbPassword2_GotFocus"/>
+            </Grid>
+            <Separator Opacity="0" Height="20"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnRegister"
+                        Content="Зарегистрироваться"
+                        Click="btnRegister_Click"
+                        Grid.Column="0"/>
+                <Button x:Name="btnCancel"
+                        Content="Отмена"
+                        Click="btnCancel_Click"
+                        Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+    </DockPanel>
 </Page>

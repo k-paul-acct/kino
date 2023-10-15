@@ -1,5 +1,5 @@
 ﻿namespace Kino.ApiClient;
 
-public class Class1
+public class ApiClient
 {
 }

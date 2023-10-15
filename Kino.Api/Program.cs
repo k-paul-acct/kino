@@ -1,4 +1,5 @@
 using Kino.Api.Data;
+using Kino.Api.Endpoints;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/", () => "Hello World!");
+app.MapEntityEndpoints();
 
 try
 {
@@ -26,7 +27,6 @@ try
 catch (Exception e)
 {
     Console.WriteLine($"No DB. Cannot create.\nException: {e}");
-    return;
 }
 
 app.Run();

@@ -23,4 +23,4 @@
       - db:/var/opt/mssql
 volumes:
   db:
-    name: marketplace_db_data
+    name: kino_db

@@ -5,8 +5,8 @@ namespace Kino.Api.Contracts.Mapping;
 
 public static partial class Mapping
 {
-    public static RoleDto MapToDto(this Role role)
+    public static GenreDto MapToDto(this Genre genre)
     {
-        return new RoleDto { Id = role.Id, Name = role.RoleName!, };
+        return new GenreDto { Id = genre.Id, Name = genre.GenreName!, };
     }
 }

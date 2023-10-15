@@ -6,4 +6,5 @@ public class Genre
     public string? GenreName { get; set; }
 
     public ICollection<Title> Titles { get; set; } = new List<Title>();
+    public ICollection<TitleHasGenre> TitleHasGenres { get; set; } = new List<TitleHasGenre>();
 }

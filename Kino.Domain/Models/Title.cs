@@ -13,4 +13,5 @@ public class Title
     public ICollection<FaveList> FaveLists { get; set; } = new List<FaveList>();
     public ICollection<Vote> Votes { get; set; } = new List<Vote>();
     public ICollection<Genre> Genres { get; set; } = new List<Genre>();
+    public ICollection<TitleHasGenre> TitleHasGenres { get; set; } = new List<TitleHasGenre>();
 }

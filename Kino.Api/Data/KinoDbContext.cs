@@ -20,6 +20,7 @@ public class KinoDbContext : DbContext
     public virtual DbSet<Genre> Genres { get; set; }
     public virtual DbSet<Role> Roles { get; set; }
     public virtual DbSet<Title> Titles { get; set; }
+    public virtual DbSet<TitleHasGenre> TitleHasGenres { get; set; }
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<Vote> Votes { get; set; }
 
@@ -33,13 +34,11 @@ public class KinoDbContext : DbContext
 
             entity.HasOne(d => d.Title).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.TitleId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_Comment_Title");
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.User).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_Comment_User");
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<FaveList>(entity =>
@@ -48,42 +47,29 @@ public class KinoDbContext : DbContext
 
             entity.HasOne(d => d.Title).WithMany(p => p.FaveLists)
                 .HasForeignKey(d => d.TitleId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_FaveList_Title");
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.User).WithMany(p => p.FaveLists)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_FaveList_User");
-        });
-
-        modelBuilder.Entity<Genre>(entity =>
-        {
-            entity.ToTable("Genre");
-
-            entity.HasMany(d => d.Titles).WithMany(p => p.Genres)
-                .UsingEntity<Dictionary<string, object>>(
-                    "GenreTitle",
-                    r => r.HasOne<Title>().WithMany()
-                        .HasForeignKey("TitleId")
-                        .HasConstraintName("FK_Genre_Title_Title"),
-                    l => l.HasOne<Genre>().WithMany()
-                        .HasForeignKey("GenreId")
-                        .HasConstraintName("FK_Genre_Title_Genre"),
-                    j =>
-                    {
-                        j.HasKey("GenreId", "TitleId").HasName("PK__Genre_Ti__74D25DE6D3F00BC4");
-                        j.ToTable("Genre_Title");
-                    });
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Role>(entity => { entity.ToTable("Role"); });
+
+        modelBuilder.Entity<Genre>(entity => { entity.ToTable("Genre"); });
 
         modelBuilder.Entity<Title>(entity =>
         {
             entity.ToTable("Title");
 
-            entity.Property(e => e.TitleAdditionalName).HasColumnName("TItleAdditionalName");
+            entity.HasMany(x => x.Genres).WithMany(x => x.Titles).UsingEntity<TitleHasGenre>();
+        });
+
+        modelBuilder.Entity<TitleHasGenre>(entity =>
+        {
+            entity.ToTable("Genre_Title");
+
+            entity.HasKey(x => new { x.GenreId, x.TitleId, });
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -92,23 +78,20 @@ public class KinoDbContext : DbContext
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_User_Role");
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Vote>(entity =>
         {
+            entity.ToTable("Vote");
+            
             entity.HasKey(e => new { e.UserId, e.TitleId, });
 
-            entity.ToTable("Vote");
-
             entity.HasOne(d => d.Title).WithMany(p => p.Votes)
-                .HasForeignKey(d => d.TitleId)
-                .HasConstraintName("FK_Vote_Title");
+                .HasForeignKey(d => d.TitleId);
 
             entity.HasOne(d => d.User).WithMany(p => p.Votes)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_Vote_User");
+                .HasForeignKey(d => d.UserId);
         });
     }
 }

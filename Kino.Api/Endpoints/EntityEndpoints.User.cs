@@ -11,7 +11,7 @@ public static partial class EntityEndpoints
 {
     private static void MapUserEndpoints(this IEndpointRouteBuilder app)
     {
-        var userApi = app.MapGroup("/users");
+        var userApi = app.MapGroup("/users").WithTags("Users");
 
         userApi.MapPost("/login", async (LoginRequest request, KinoDbContext context) =>
         {
@@ -39,14 +39,31 @@ public static partial class EntityEndpoints
                         .AnyAsync(x => x.UserName == request.Username)) return Results.Conflict();
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
+                return Results.Ok();
             }
             catch (DbUpdateException e)
             {
                 Console.WriteLine(e);
                 return Results.Conflict();
             }
+        });
 
-            return Results.Ok();
+        userApi.MapDelete("/{id:int}", async (int id, KinoDbContext context) =>
+        {
+            var user = await context.Users.FindAsync(id);
+            if (user is null) return Results.NotFound();
+            
+            try
+            {
+                user.RoleId = (int)Roles.Deleted;
+                await context.SaveChangesAsync();
+                return Results.Ok();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
         });
     }
 }

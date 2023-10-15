@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Icons\icon_add.png" />
+    <None Remove="Resources\Icons\icon_exit.png" />
+    <None Remove="Resources\Icons\icon_favorites.png" />
+    <None Remove="Resources\Icons\icon_movie_list.png" />
+    <None Remove="Resources\Icons\icon_profile.png" />
+    <None Remove="Resources\Images\normal_breadcrumb.jpg" />
+    <None Remove="Resources\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icons\icon_favorites.png" />
+    <Resource Include="Resources\Icons\icon_add.png" />
+    <Resource Include="Resources\Icons\icon_exit.png" />
+    <Resource Include="Resources\Icons\icon_movie_list.png" />
+    <Resource Include="Resources\Icons\icon_profile.png" />
+    <Resource Include="Resources\Images\normal_breadcrumb.jpg" />
+    <Resource Include="Resources\logo.png" />
+  </ItemGroup>
+
+</Project>

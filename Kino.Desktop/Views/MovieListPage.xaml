@@ -6,8 +6,20 @@
       xmlns:local="clr-namespace:Kino.Desktop.Views"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1400">
+    <Page.Resources>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+        </Style>
+    </Page.Resources>
 
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <WrapPanel>
+            <ComboBox Template="{DynamicResource ComboBoxStyle}" x:Name="cbCategories"/>
+            <TextBox x:Name="tbSearch"
+                     Width="300"
+                     Tag="Поиск.."/>
+            <ComboBox x:Name="cbSortMode"/>
+        </WrapPanel>
+    </StackPanel>
 </Page>

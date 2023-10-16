@@ -13,9 +13,14 @@ public partial class ApiClient
         using var content = new StringContent(body, Encoding.UTF8, "application/json");
         using var response = await _client.PostAsync("users/login", content);
 
-        return response.IsSuccessStatusCode
-            ? JsonConvert.DeserializeObject<UserDto>(await response.Content.ReadAsStringAsync())
-            : null;
+        if (response.IsSuccessStatusCode)
+        {
+            var user = JsonConvert.DeserializeObject<UserDto>(await response.Content.ReadAsStringAsync());
+            UserId = user!.Id;
+        }
+
+        UserId = null;
+        return null;
     }
 
     public async Task<bool> Register(string username, string email, string password)
@@ -26,7 +31,7 @@ public partial class ApiClient
 
         return response.IsSuccessStatusCode;
     }
-    
+
     public async Task<bool> Delete(string username, string email, string password)
     {
         var body = JsonConvert.SerializeObject(new RegisterRequest { Username = username, Email = email, Password = password, });

@@ -7,3 +7,6 @@ Console.WriteLine(loginRes);
 
 var registerRes = await client.Register("string", "string", "string");
 Console.WriteLine(registerRes);
+
+var genres = await client.GetAllGenres();
+Console.WriteLine(genres.Count());

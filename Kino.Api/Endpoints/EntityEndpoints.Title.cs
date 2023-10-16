@@ -1,3 +1,4 @@
+using Kino.Api.Contracts.Mapping;
 using Kino.Api.Contracts.Requests;
 using Kino.Api.Data;
 using Kino.ApiClient.Dto;
@@ -106,7 +107,7 @@ public static partial class EntityEndpoints
             }
         });
 
-        titleApi.MapPatch("", async (UpdateTitleRequest request, KinoDbContext context) =>
+        titleApi.MapPut("", async (UpdateTitleRequest request, KinoDbContext context) =>
         {
             var title = await context.Titles.Include(x => x.Genres).FirstOrDefaultAsync(x => x.Id == request.Id);
             if (title is null) return Results.NotFound();
@@ -194,7 +195,7 @@ public static partial class EntityEndpoints
             }
         });
 
-        titleApi.MapPost("/{id:int}/remove-from-favourites", async (int id, int userId, KinoDbContext context) =>
+        titleApi.MapDelete("/{id:int}/remove-from-favourites", async (int id, int userId, KinoDbContext context) =>
         {
             var favourite = await context.FaveLists.FirstOrDefaultAsync(x => x.UserId == userId && x.TitleId == id);
             if (favourite is null) return Results.NotFound();
@@ -226,20 +227,22 @@ public static partial class EntityEndpoints
         titleApi.MapPost("/{id:int}/comment", async (CommentRequest request, int id, int userId, KinoDbContext context) =>
         {
             var title = await context.Titles.FindAsync(id);
-            if (title is null) return Results.NotFound();
+            var user = await context.Users.FindAsync(userId);
+            if (title is null || user is null) return Results.NotFound();
 
             try
             {
                 var comment = new Comment
                 {
                     UserId = userId,
+                    User = user,
                     TitleId = id,
                     Date = DateTime.UtcNow,
                     TextContent = request.Text,
                 };
                 context.Comments.Add(comment);
                 await context.SaveChangesAsync();
-                return Results.Ok();
+                return Results.Ok(comment.MapToDto());
             }
             catch (DbUpdateException e)
             {

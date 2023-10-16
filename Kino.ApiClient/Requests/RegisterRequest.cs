@@ -1,6 +1,6 @@
 namespace Kino.ApiClient.Requests;
 
-public record RegisterRequest
+internal record RegisterRequest
 {
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;

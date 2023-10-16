@@ -16,23 +16,17 @@ public partial class ApiClient
         if (response.IsSuccessStatusCode)
         {
             var user = JsonConvert.DeserializeObject<UserDto>(await response.Content.ReadAsStringAsync());
-            UserId = user!.Id;
+            _userId = user!.Id;
+            _authPart = $"userId={_userId}";
+            return user;
         }
 
-        UserId = null;
+        _userId = null;
+        _authPart = string.Empty;
         return null;
     }
 
     public async Task<bool> Register(string username, string email, string password)
-    {
-        var body = JsonConvert.SerializeObject(new RegisterRequest { Username = username, Email = email, Password = password, });
-        using var content = new StringContent(body, Encoding.UTF8, "application/json");
-        using var response = await _client.PostAsync("users/register", content);
-
-        return response.IsSuccessStatusCode;
-    }
-
-    public async Task<bool> Delete(string username, string email, string password)
     {
         var body = JsonConvert.SerializeObject(new RegisterRequest { Username = username, Email = email, Password = password, });
         using var content = new StringContent(body, Encoding.UTF8, "application/json");

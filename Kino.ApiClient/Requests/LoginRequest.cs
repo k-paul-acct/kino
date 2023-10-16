@@ -1,6 +1,6 @@
 namespace Kino.ApiClient.Requests;
 
-public record LoginRequest
+internal record LoginRequest
 {
     public string Username { get; set; } = null!;
     public string Password { get; set; } = null!;

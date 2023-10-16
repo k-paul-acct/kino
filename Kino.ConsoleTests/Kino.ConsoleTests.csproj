@@ -8,13 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Kino.ApiClient\Kino.ApiClient.csproj" />
-      <ProjectReference Include="..\Kino.Api\Kino.Api.csproj" />
-      <ProjectReference Include="..\Kino.Domain\Kino.Domain.csproj" />
+        <ProjectReference Include="..\Kino.ApiClient\Kino.ApiClient.csproj"/>
+        <ProjectReference Include="..\Kino.Api\Kino.Api.csproj"/>
+        <ProjectReference Include="..\Kino.Domain\Kino.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+        <PackageReference Include="NETStandard.Library" Version="2.0.3"/>
     </ItemGroup>
 
 </Project>

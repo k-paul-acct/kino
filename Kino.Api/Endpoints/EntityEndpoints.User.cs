@@ -36,7 +36,11 @@ public static partial class EntityEndpoints
             {
                 if (await context.Users
                         .Where(x => x.RoleId != (int)Roles.Deleted)
-                        .AnyAsync(x => x.UserName == request.Username)) return Results.Conflict();
+                        .AnyAsync(x => x.UserName == request.Username))
+                {
+                    return Results.Conflict();
+                }
+
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
                 return Results.Ok();

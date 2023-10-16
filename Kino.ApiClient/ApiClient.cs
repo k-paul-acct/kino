@@ -6,8 +6,8 @@ namespace Kino.ApiClient;
 public partial class ApiClient
 {
     private readonly HttpClient _client;
-    private int? _userId;
     private string _authPart = string.Empty;
+    private int? _userId;
 
     public ApiClient(string baseAddress)
     {

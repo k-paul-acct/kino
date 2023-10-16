@@ -1,18 +1,12 @@
-﻿using Kino.Desktop.Models;
+﻿using Kino.ApiClient.Dto;
+using Kino.ApiClient.Requests;
+using Kino.Desktop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Kino.Desktop.Views
 {
@@ -37,10 +31,18 @@ namespace Kino.Desktop.Views
             Context.СurrentUser = null;
         }
 
-        private void btnSetPhoto_Click(object sender, RoutedEventArgs e)
+        private async void btnSetPhoto_Click(object sender, RoutedEventArgs e)
         {
-            //логика для сохранения фотки пользователя
+            var provile = new UpdateProfileRequest()
+            {
+                Id = Context.СurrentUser.Id,
+                ImageUrl = tbImgUrl.Text,
+            };
+
+            await Context.apiClient.UpdateUserInfo(tbImgUrl.Text);
+            imgProfile.Source = new BitmapImage(new Uri(tbImgUrl.Text));
             tbImgUrl.Text = string.Empty;
+
         }
     }
 }

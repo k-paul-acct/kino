@@ -7,7 +7,97 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1400">
 
-    <Grid>
-        
-    </Grid>
+    <Page.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+            <Setter Property="Height" Value="40"/>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer>
+        <DockPanel Margin="40,10,10,0" LastChildFill="False">
+            <StackPanel Orientation="Horizontal"
+            DockPanel.Dock="Top">
+                <StackPanel>
+                    <Image x:Name="imgMovie"
+                           Width="300"
+                           Source="\Resources\Icons\icon_image.png"/>
+                    <Separator Opacity="0" Height="30"/>
+                    <TextBox x:Name="tbImgUrl"
+                             Tag="Image Url"
+                             Width="300"/>
+                    <Separator Opacity="0" Height="10"/>
+                    <Button x:Name="btnSetPhoto"
+                            Content="Установить фото" Click="btnSetPhoto_Click"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            HorizontalAlignment="Left"
+                            Margin="40,20,0,0">
+                    <TextBox x:Name="tbName"
+                             Tag="Название фильма"
+                             FontSize="30"
+                             FontWeight="Bold"
+                             Width="800"
+                             Margin="0,0,0,10"
+                             HorizontalAlignment="Left"/>
+                    <TextBox x:Name="tbDescription"
+                             Tag="Описание"
+                             FontSize="30"
+                             Foreground="#6d737f"
+                             Margin="0,0,0,10"
+                             Height="200" Width="800"
+                             TextWrapping="Wrap"/>
+                    <TextBox x:Name="tbYear"
+                             Tag="Год"
+                             FontSize="30"
+                             Width="100"
+                             Foreground="#6d737f"
+                             Margin="0,0,0,10"
+                             HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <ComboBox Template="{DynamicResource ComboBoxTemplate}" 
+                                  x:Name="cbCategories"
+                                  Tag="Жанр"
+                                  FontSize="20"
+                                  DisplayMemberPath="Name" SelectedValuePath="Id"
+                                  Width="200">
+                            <ComboBox.Resources>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}" />
+                                </Style>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                        <Button x:Name="btnAddGenre"
+                                Content="Добавить жанр"
+                                Click="btnAddGenre_Click"
+                                Margin="10,0,0,0"
+                                Width="200"/>
+                    </StackPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Жанр: "
+                       Foreground="#6d737f"/>
+                        <ItemsControl x:Name="icGenres">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Margin="0,0,10,0"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </WrapPanel>
+                </StackPanel>
+            </StackPanel>
+            <Button x:Name="btnAddMovie"
+                    Content="Добавить фильм"
+                    DockPanel.Dock="Top"
+                    Width="500"
+                    FontSize="20"
+                    Margin="20"
+                    Click="btnAddMovie_Click"/>
+        </DockPanel>
+    </ScrollViewer>
 </Page>

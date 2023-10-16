@@ -20,7 +20,8 @@
                    Width="300"/>
             <Separator Opacity="0" Height="30"/>
             <TextBox x:Name="tbImgUrl"
-                     Tag="Image Url"/>
+                     Tag="Image Url"
+                     Width="300"/>
             <Separator Opacity="0" Height="10"/>
             <Button x:Name="btnSetPhoto"
                     Content="Установить фото" Click="btnSetPhoto_Click"/>

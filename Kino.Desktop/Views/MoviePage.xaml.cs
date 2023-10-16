@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Kino.ApiClient.Dto;
+using Kino.Desktop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,14 +22,31 @@ namespace Kino.Desktop.Views
     /// </summary>
     public partial class MoviePage : Page
     {
-        public MoviePage()
+        private TitleDetailsDto title { get; set; }
+        public MoviePage(int id)
         {
             InitializeComponent();
+            InitializeComponentAsync(id);
         }
 
-        private void btnSubmitComment_Click(object sender, RoutedEventArgs e)
+        private async void InitializeComponentAsync(int id)
         {
+            title = await Context.apiClient.GetTitle(id);
+            lbDate.Text = title.Year.ToString();
+            lbName.Text = title.Name;
+            lbDescription.Text = title.Description;
+            lbRating.Text = title.Rating.ToString();
+            imgTitle.Source = new BitmapImage(new Uri(title.ImageUrl));
+            icGenres.ItemsSource = title.Genres;
+            icComments.ItemsSource = title.Comments;
+        }
 
+        private async void btnSubmitComment_Click(object sender, RoutedEventArgs e)
+        {
+            await Context.apiClient.AddCommentToTitle(title.Id, tbComment.Text);
+            tbComment.Text = string.Empty;
+
+            InitializeComponentAsync(title.Id);
         }
     }
 }

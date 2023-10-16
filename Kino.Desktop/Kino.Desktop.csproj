@@ -8,33 +8,36 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Resources\Icons\icon_add.png"/>
-        <None Remove="Resources\Icons\icon_exit.png"/>
-        <None Remove="Resources\Icons\icon_favorites.png"/>
-        <None Remove="Resources\Icons\icon_image.png"/>
-        <None Remove="Resources\Icons\icon_movie_list.png"/>
-        <None Remove="Resources\Icons\icon_profile.png"/>
-        <None Remove="Resources\Images\normal_breadcrumb.jpg"/>
-        <None Remove="Resources\logo.png"/>
+        <None Remove="Resources\Icons\icon_add.png" />
+        <None Remove="Resources\Icons\icon_comment.png" />
+        <None Remove="Resources\Icons\icon_exit.png" />
+        <None Remove="Resources\Icons\icon_favorites.png" />
+        <None Remove="Resources\Icons\icon_image.png" />
+        <None Remove="Resources\Icons\icon_movie_list.png" />
+        <None Remove="Resources\Icons\icon_profile.png" />
+        <None Remove="Resources\Images\normal_breadcrumb.jpg" />
+        <None Remove="Resources\logo.png" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="NETStandard.Library" Version="2.0.3"/>
+        <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Kino.ApiClient\Kino.ApiClient.csproj"/>
+        <ProjectReference Include="..\Kino.ApiClient\Kino.ApiClient.csproj" />
+        <ProjectReference Include="..\Kino.Api\Kino.Api.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Resource Include="Resources\Icons\icon_favorites.png"/>
-        <Resource Include="Resources\Icons\icon_add.png"/>
-        <Resource Include="Resources\Icons\icon_exit.png"/>
-        <Resource Include="Resources\Icons\icon_image.png"/>
-        <Resource Include="Resources\Icons\icon_movie_list.png"/>
-        <Resource Include="Resources\Icons\icon_profile.png"/>
-        <Resource Include="Resources\Images\normal_breadcrumb.jpg"/>
-        <Resource Include="Resources\logo.png"/>
+        <Resource Include="Resources\Icons\icon_comment.png" />
+        <Resource Include="Resources\Icons\icon_favorites.png" />
+        <Resource Include="Resources\Icons\icon_add.png" />
+        <Resource Include="Resources\Icons\icon_exit.png" />
+        <Resource Include="Resources\Icons\icon_image.png" />
+        <Resource Include="Resources\Icons\icon_movie_list.png" />
+        <Resource Include="Resources\Icons\icon_profile.png" />
+        <Resource Include="Resources\Images\normal_breadcrumb.jpg" />
+        <Resource Include="Resources\logo.png" />
     </ItemGroup>
 
 </Project>

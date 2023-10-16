@@ -7,25 +7,25 @@ namespace Kino.ApiClient;
 
 public partial class ApiClient
 {
-    public async Task<TitlePreviewDto?> CreateTitle(CreateTitleRequest request)
+    public async Task<TitleDetailsDto?> CreateTitle(CreateTitleRequest request)
     {
         var body = JsonConvert.SerializeObject(request);
         using var content = new StringContent(body, Encoding.UTF8, "application/json");
         using var response = await _client.PostAsync("titles", content);
 
         return response.IsSuccessStatusCode
-            ? JsonConvert.DeserializeObject<TitlePreviewDto>(await response.Content.ReadAsStringAsync())
+            ? JsonConvert.DeserializeObject<TitleDetailsDto>(await response.Content.ReadAsStringAsync())
             : null;
     }
 
-    public async Task<TitlePreviewDto?> UpdateTitle(UpdateTitleRequest request)
+    public async Task<TitleDetailsDto?> UpdateTitle(UpdateTitleRequest request)
     {
         var body = JsonConvert.SerializeObject(request);
         using var content = new StringContent(body, Encoding.UTF8, "application/json");
         using var response = await _client.PutAsync("titles", content);
 
         return response.IsSuccessStatusCode
-            ? JsonConvert.DeserializeObject<TitlePreviewDto>(await response.Content.ReadAsStringAsync())
+            ? JsonConvert.DeserializeObject<TitleDetailsDto>(await response.Content.ReadAsStringAsync())
             : null;
     }
 

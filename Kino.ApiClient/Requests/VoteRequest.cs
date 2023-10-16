@@ -1,6 +1,6 @@
 namespace Kino.ApiClient.Requests;
 
-internal class VoteRequest
+public class VoteRequest
 {
     public int Rating { get; set; }
 }

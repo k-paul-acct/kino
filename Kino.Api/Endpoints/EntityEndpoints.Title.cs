@@ -104,6 +104,35 @@ public static partial class EntityEndpoints
             }
         });
 
+        userApi.MapPatch("", async (UpdateTitleRequest request, KinoDbContext context) =>
+        {
+            var title = await context.Titles.Include(x => x.Genres).FirstOrDefaultAsync(x => x.Id == request.Id);
+            if (title is null) return Results.NotFound();
+
+            title.TitleName = request.Name;
+            title.TitleAdditionalName = request.AdditionalName;
+            title.Description = request.Description;
+            title.Date = request.Year;
+            title.ImageUrl = request.ImageUrl;
+
+            try
+            {
+                await context.SaveChangesAsync();
+
+                var genres = request.GenreIds.Select(x => new TitleHasGenre { GenreId = x, TitleId = title.Id, }).ToList();
+                title.TitleHasGenres = genres;
+                await context.SaveChangesAsync();
+
+                var preview = await context.Titles.GetTitlePreviewDtos().FirstOrDefaultAsync(x => x.Id == title.Id);
+                return Results.Ok(preview);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
+        });
+
         userApi.MapGet("", async (KinoDbContext context, int[]? genreIds, string? query) =>
         {
             var result = await context.Titles

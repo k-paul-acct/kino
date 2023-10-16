@@ -48,7 +48,7 @@ public static partial class EntityEndpoints
             }
         });
 
-        userApi.MapPatch("", async (UpdateProfileRequest request, KinoDbContext context) =>
+        userApi.MapPut("", async (UpdateProfileRequest request, KinoDbContext context) =>
         {
             var user = await context.Users.Include(x => x.Role).FirstOrDefaultAsync(x => x.Id == request.Id);
             if (user is null) return Results.NotFound();

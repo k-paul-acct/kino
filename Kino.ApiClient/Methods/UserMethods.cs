@@ -34,4 +34,21 @@ public partial class ApiClient
 
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<UserDto?> UpdateUserInfo(string imageUrl)
+    {
+        var body = JsonConvert.SerializeObject(new UpdateProfileRequest { Id = _userId ?? 0, ImageUrl = imageUrl, });
+        using var content = new StringContent(body, Encoding.UTF8, "application/json");
+        using var response = await _client.PutAsync("users", content);
+
+        return response.IsSuccessStatusCode
+            ? JsonConvert.DeserializeObject<UserDto>(await response.Content.ReadAsStringAsync())
+            : null;
+    }
+
+    public async Task<bool> DeleteUser(int userId)
+    {
+        using var response = await _client.DeleteAsync($"users/{userId}");
+        return response.IsSuccessStatusCode;
+    }
 }

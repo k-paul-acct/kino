@@ -6,25 +6,62 @@
       xmlns:local="clr-namespace:Kino.Desktop.Views"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1400"
-      Title="AuthorizationPage"
       Background="#0b0c2a">
+    <Page.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+            <Setter Property="Height" Value="40"/>
+        </Style>
+    </Page.Resources>
 
-    <DockPanel>
-        <Image DockPanel.Dock="Top" Source="\Resources\Images\normal_breadcrumb.jpg"/>
-        <StackPanel Orientation="Horizontal"
+    <DockPanel LastChildFill="False">
+        <Grid DockPanel.Dock="Top"
+              Margin="0,0,0,40">
+            <Image Source="\Resources\Images\normal_breadcrumb.jpg"/>
+            <TextBlock Text="Авторизация"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="60"/>
+        </Grid>
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <StackPanel Orientation="Vertical">
-                <TextBox Width="400"
-                         Tag="Логин"/>
-                <TextBox Width="400"
-                         Tag="Пароль"/>
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        Width="400">
+                <TextBlock Text="Авторизация"
+                           HorizontalAlignment="Center"
+                           FontSize="30"/>
+                <Separator Opacity="0" Height="20"/>
+                <TextBox Tag="Логин"
+                         x:Name="tbLogin"/>
+                <Separator Opacity="0" Height="20"/>
+                <Grid>
+                    <PasswordBox Tag="Пароль"
+                                 x:Name="pbPassword"
+                                 LostFocus="pbPassword_LostFocus"/>
+                    <TextBox Tag="Пароль"
+                             x:Name="tbPassword"
+                             GotFocus="tbPassword_GotFocus"/>
+                </Grid>
+                <Separator Opacity="0" Height="20"/>
+                <Button x:Name="btnLogin"
+                        Content="Авторизоваться"
+                        Click="btnLogin_Click"/>
             </StackPanel>
             <Rectangle Fill="#3c3d55"
-                       Height="400"
+                       Height="300"
                        Width="5"
                        Margin="20"/>
-            <StackPanel Orientation="Vertical">
-                <TextBox/>
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        Width="400">
+                <TextBlock Text="У вас нет аккаунта?"
+                           HorizontalAlignment="Center"
+                           FontSize="30"/>
+                <Separator Opacity="0" Height="20"/>
+                <Button x:Name="btnToRegistr"
+                        Content="Зарегистрироваться"
+                        Click="btnToRegistr_Click"/>
             </StackPanel>
         </StackPanel>
     </DockPanel>

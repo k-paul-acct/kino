@@ -5,10 +5,50 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Kino.Desktop.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ProfilePage">
+      d:DesignHeight="800" d:DesignWidth="1400">
+    <Page.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Page.Resources>
+    
+    <DockPanel Margin="40,10,10,0" LastChildFill="False">
+        <StackPanel>
+            <Image DockPanel.Dock="Left"
+                   x:Name="imgProfile"
+                   Width="300"/>
+            <Separator Opacity="0" Height="30"/>
+            <TextBox x:Name="tbImgUrl"
+                     Tag="Image Url"/>
+            <Separator Opacity="0" Height="10"/>
+            <Button x:Name="btnSetPhoto"
+                    Content="Установить фото" Click="btnSetPhoto_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical"
+                    DockPanel.Dock="Left"
+                    Margin="40,20,0,0">
+            <TextBlock x:Name="lbLogin"
+                       Text="Логин"
+                       FontSize="30"/>
+            <TextBlock x:Name="lbEmail"
+                       Text="Почта"
+                       FontSize="30"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Right">
+            <Button x:Name="btnExit"
+                    Click="btnExit_Click"
+                    Height="120"
+                    Width="120">
+                <StackPanel VerticalAlignment="Center">
+                    <Image Source="\Resources\Icons\icon_exit.png"
+                           Margin="10"
+                           Width="70"/>
+                    <TextBlock x:Name="tbBtnExit" Text="Выйти" TextWrapping="Wrap"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
 
-    <Grid>
-        
-    </Grid>
+        </StackPanel>
+    </DockPanel>
 </Page>

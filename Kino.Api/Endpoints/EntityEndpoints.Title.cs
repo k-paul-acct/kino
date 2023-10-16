@@ -54,6 +54,7 @@ public static partial class EntityEndpoints
             }),
             Rating = x.Votes.Average(y => y.Rating),
             IsFavourite = userId == null ? null : x.FaveLists.Select(y => y.UserId).Contains(userId),
+            Voted = userId == null ? null : x.Votes.Where(y => y.UserId == userId).Select(y => y.Rating).FirstOrDefault(),
         });
     }
 
@@ -255,6 +256,30 @@ public static partial class EntityEndpoints
             try
             {
                 context.Comments.Remove(comment);
+                await context.SaveChangesAsync();
+                return Results.Ok();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
+        });
+
+        titleApi.MapPost("/{id:int}/vote", async (VoteRequest request, int id, int userId, KinoDbContext context) =>
+        {
+            var title = await context.Titles.FindAsync(id);
+            if (title is null) return Results.NotFound();
+
+            try
+            {
+                var vote = new Vote
+                {
+                    UserId = userId,
+                    TitleId = id,
+                    Rating = request.Rating,
+                };
+                context.Votes.Add(vote);
                 await context.SaveChangesAsync();
                 return Results.Ok();
             }

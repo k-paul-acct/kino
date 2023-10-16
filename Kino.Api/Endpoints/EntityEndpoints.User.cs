@@ -36,7 +36,11 @@ public static partial class EntityEndpoints
             {
                 if (await context.Users
                         .Where(x => x.RoleId != (int)Roles.Deleted)
-                        .AnyAsync(x => x.UserName == request.Username)) return Results.Conflict();
+                        .AnyAsync(x => x.UserName == request.Username))
+                {
+                    return Results.Conflict();
+                }
+
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
                 return Results.Ok();
@@ -48,7 +52,7 @@ public static partial class EntityEndpoints
             }
         });
 
-        userApi.MapPatch("", async (UpdateProfileRequest request, KinoDbContext context) =>
+        userApi.MapPut("", async (UpdateProfileRequest request, KinoDbContext context) =>
         {
             var user = await context.Users.Include(x => x.Role).FirstOrDefaultAsync(x => x.Id == request.Id);
             if (user is null) return Results.NotFound();

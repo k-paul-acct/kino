@@ -84,7 +84,7 @@ public class KinoDbContext : DbContext
         modelBuilder.Entity<Vote>(entity =>
         {
             entity.ToTable("Vote");
-            
+
             entity.HasKey(e => new { e.UserId, e.TitleId, });
 
             entity.HasOne(d => d.Title).WithMany(p => p.Votes)

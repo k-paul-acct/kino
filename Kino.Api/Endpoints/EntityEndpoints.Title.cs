@@ -72,9 +72,9 @@ public static partial class EntityEndpoints
 
     private static void MapTitleEndpoints(this IEndpointRouteBuilder app)
     {
-        var userApi = app.MapGroup("/titles").WithTags("Titles");
+        var titleApi = app.MapGroup("/titles").WithTags("Titles");
 
-        userApi.MapPost("", async (CreateTitleRequest request, KinoDbContext context) =>
+        titleApi.MapPost("", async (CreateTitleRequest request, KinoDbContext context) =>
         {
             var title = new Title
             {
@@ -104,7 +104,7 @@ public static partial class EntityEndpoints
             }
         });
 
-        userApi.MapPatch("", async (UpdateTitleRequest request, KinoDbContext context) =>
+        titleApi.MapPatch("", async (UpdateTitleRequest request, KinoDbContext context) =>
         {
             var title = await context.Titles.Include(x => x.Genres).FirstOrDefaultAsync(x => x.Id == request.Id);
             if (title is null) return Results.NotFound();
@@ -133,7 +133,7 @@ public static partial class EntityEndpoints
             }
         });
 
-        userApi.MapGet("", async (KinoDbContext context, int[]? genreIds, string? query) =>
+        titleApi.MapGet("", async (KinoDbContext context, int[]? genreIds, string? query) =>
         {
             var result = await context.Titles
                 .FilterByGenres(genreIds)
@@ -144,10 +144,28 @@ public static partial class EntityEndpoints
             return Results.Ok(result);
         });
 
-        userApi.MapGet("/{id:int}", async (int id, KinoDbContext context) =>
+        titleApi.MapGet("/{id:int}", async (int id, KinoDbContext context) =>
         {
             var title = await context.Titles.GetTitleDetailsDtos().FirstOrDefaultAsync(x => x.Id == id);
             return title is null ? Results.NotFound() : Results.Ok(title);
+        });
+
+        titleApi.MapDelete("/{id:int}", async (int id, KinoDbContext context) =>
+        {
+            var title = await context.Titles.FindAsync(id);
+            if (title is null) return Results.NotFound();
+
+            try
+            {
+                context.Titles.Remove(title);
+                await context.SaveChangesAsync();
+                return Results.Ok();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
         });
     }
 }

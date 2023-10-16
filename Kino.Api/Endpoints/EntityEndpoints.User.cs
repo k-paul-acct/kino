@@ -48,11 +48,29 @@ public static partial class EntityEndpoints
             }
         });
 
+        userApi.MapPatch("", async (UpdateProfileRequest request, KinoDbContext context) =>
+        {
+            var user = await context.Users.Include(x => x.Role).FirstOrDefaultAsync(x => x.Id == request.Id);
+            if (user is null) return Results.NotFound();
+
+            try
+            {
+                user.ImageUrl = request.ImageUrl;
+                await context.SaveChangesAsync();
+                return Results.Ok(user.MapToDto());
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
+        });
+
         userApi.MapDelete("/{id:int}", async (int id, KinoDbContext context) =>
         {
             var user = await context.Users.FindAsync(id);
             if (user is null) return Results.NotFound();
-            
+
             try
             {
                 user.RoleId = (int)Roles.Deleted;

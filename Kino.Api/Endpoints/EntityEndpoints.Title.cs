@@ -18,7 +18,7 @@ public static partial class EntityEndpoints
             AdditionalName = x.TitleAdditionalName,
             Year = x.Date!.Value,
             ImageUrl = x.ImageUrl!,
-            VotesNumber = x.Votes.Count,
+            CommentsNumber = x.Comments.Count,
             Genres = x.Genres.Select(y => new GenreDto
             {
                 Id = y.Id,
@@ -38,7 +38,7 @@ public static partial class EntityEndpoints
             Year = x.Date!.Value,
             ImageUrl = x.ImageUrl!,
             VotesNumber = x.Votes.Count,
-            Comments = x.Comments.Select(y => new CommentDto
+            Comments = x.Comments.OrderByDescending(y => y.Date).Select(y => new CommentDto
             {
                 Id = y.Id,
                 TitleId = y.TitleId!.Value,
@@ -220,6 +220,49 @@ public static partial class EntityEndpoints
                 .ToListAsync();
 
             return Results.Ok(titles);
+        });
+
+        titleApi.MapPost("/{id:int}/comment", async (CommentRequest request, int id, int userId, KinoDbContext context) =>
+        {
+            var title = await context.Titles.FindAsync(id);
+            if (title is null) return Results.NotFound();
+
+            try
+            {
+                var comment = new Comment
+                {
+                    UserId = userId,
+                    TitleId = id,
+                    Date = DateTime.UtcNow,
+                    TextContent = request.Text,
+                };
+                context.Comments.Add(comment);
+                await context.SaveChangesAsync();
+                return Results.Ok();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
+        });
+
+        titleApi.MapDelete("/comments/{commentId:int}", async (int commentId, KinoDbContext context) =>
+        {
+            var comment = await context.Comments.FindAsync(commentId);
+            if (comment is null) return Results.NotFound();
+
+            try
+            {
+                context.Comments.Remove(comment);
+                await context.SaveChangesAsync();
+                return Results.Ok();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
         });
     }
 }

@@ -27,7 +27,7 @@ public static partial class EntityEndpoints
         });
     }
 
-    private static IQueryable<TitleDetailsDto> GetTitleDetailsDtos(this IQueryable<Title> titles)
+    private static IQueryable<TitleDetailsDto> GetTitleDetailsDtos(this IQueryable<Title> titles, int? userId)
     {
         return titles.Select(x => new TitleDetailsDto
         {
@@ -53,6 +53,7 @@ public static partial class EntityEndpoints
                 Name = y.GenreName!,
             }),
             Rating = x.Votes.Average(y => y.Rating),
+            IsFavourite = userId == null ? null : x.FaveLists.Select(y => y.UserId).Contains(userId),
         });
     }
 
@@ -144,9 +145,9 @@ public static partial class EntityEndpoints
             return Results.Ok(result);
         });
 
-        titleApi.MapGet("/{id:int}", async (int id, KinoDbContext context) =>
+        titleApi.MapGet("/{id:int}", async (int id, int? userId, KinoDbContext context) =>
         {
-            var title = await context.Titles.GetTitleDetailsDtos().FirstOrDefaultAsync(x => x.Id == id);
+            var title = await context.Titles.GetTitleDetailsDtos(userId).FirstOrDefaultAsync(x => x.Id == id);
             return title is null ? Results.NotFound() : Results.Ok(title);
         });
 
@@ -166,6 +167,59 @@ public static partial class EntityEndpoints
                 Console.WriteLine(e);
                 return Results.Conflict();
             }
+        });
+
+        titleApi.MapPost("/{id:int}/add-to-favourites", async (int id, int userId, KinoDbContext context) =>
+        {
+            var title = await context.Titles.FindAsync(id);
+            if (title is null) return Results.NotFound();
+            if (await context.FaveLists.AnyAsync(x => x.UserId == userId && x.TitleId == id)) return Results.BadRequest();
+
+            try
+            {
+                var favourite = new FaveList
+                {
+                    UserId = userId,
+                    TitleId = id,
+                };
+                context.FaveLists.Add(favourite);
+                await context.SaveChangesAsync();
+                return Results.Ok();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
+        });
+
+        titleApi.MapPost("/{id:int}/remove-from-favourites", async (int id, int userId, KinoDbContext context) =>
+        {
+            var favourite = await context.FaveLists.FirstOrDefaultAsync(x => x.UserId == userId && x.TitleId == id);
+            if (favourite is null) return Results.NotFound();
+
+            try
+            {
+                context.FaveLists.Remove(favourite);
+                await context.SaveChangesAsync();
+                return Results.Ok();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                return Results.Conflict();
+            }
+        });
+
+        titleApi.MapGet("/favourites", async (int userId, KinoDbContext context) =>
+        {
+            var titles = await context.FaveLists
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Title!)
+                .GetTitlePreviewDtos()
+                .ToListAsync();
+
+            return Results.Ok(titles);
         });
     }
 }

@@ -93,28 +93,55 @@
 
                 </StackPanel>
             </StackPanel>
+            
             <StackPanel DockPanel.Dock="Top">
-                <WrapPanel Margin="0,10,0,20">
-                    <Rectangle Width="10" 
-                       Fill="#E43637"
-                       Margin="0,0,10,0"/>
-                    <TextBlock Text="Оставить коментарий"
-                       FontSize="30"
-                       FontWeight="Bold"/>
-                </WrapPanel>
-                <TextBox x:Name="tbComment"
-                         Tag="Ваш комментарий..."
-                         Width="800"
-                         HorizontalAlignment="Left"
-                         TextWrapping="Wrap"
-                         MaxLength="500"
-                         Height="100"
-                         Margin="0,0,0,5"/>
-                <Button x:Name="btnSubmitComment"
-                        Content="Отправить"
-                        Click="btnSubmitComment_Click"
-                        Width="150"
-                        HorizontalAlignment="Left"/> 
+                <StackPanel x:Name="panelAddRating">
+                    <WrapPanel Margin="0,10,0,20">
+                        <Rectangle Width="10" 
+                                   Fill="#E43637"
+                                   Margin="0,0,10,0"/>
+                        <TextBlock Text="Установить оценку"
+                                   FontSize="30"
+                                   FontWeight="Bold"/>
+                    </WrapPanel>
+                    <TextBox x:Name="tbRating"
+                             Tag="Оценка"
+                             Width="80"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap"
+                             MaxLength="1"
+                             TextChanged="tbRating_TextChanged"
+                             PreviewTextInput="tbRating_PreviewTextInput"
+                             Margin="0,0,0,5"/>
+                    <Button x:Name="btnSubmitRating"
+                            Content="Отправить"
+                            Click="btnSubmitRating_Click"
+                            Width="150"
+                            HorizontalAlignment="Left"/>
+                </StackPanel>
+                <StackPanel x:Name="panelAddComment">
+                    <WrapPanel Margin="0,10,0,20">
+                        <Rectangle Width="10" 
+                                   Fill="#E43637"
+                                   Margin="0,0,10,0"/>
+                        <TextBlock Text="Оставить коментарий"
+                                   FontSize="30"
+                                   FontWeight="Bold"/>
+                    </WrapPanel>
+                    <TextBox x:Name="tbComment"
+                             Tag="Ваш комментарий..."
+                             Width="800"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap"
+                             MaxLength="500"
+                             Height="100"
+                             Margin="0,0,0,5"/>
+                    <Button x:Name="btnSubmitComment"
+                            Content="Отправить"
+                            Click="btnSubmitComment_Click"
+                            Width="150"
+                            HorizontalAlignment="Left"/>
+                </StackPanel>
                 <WrapPanel Margin="0,20,0,0"
                            x:Name="panelComment"
                            Visibility="Collapsed">

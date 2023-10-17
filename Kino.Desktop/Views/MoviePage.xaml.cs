@@ -1,5 +1,7 @@
 ﻿using Kino.ApiClient.Dto;
 using Kino.Desktop.Models;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace Kino.Desktop.Views
     {
         private TitleDetailsDto title { get; set; }
         private bool isFavorites { get; set; } = false;
+
         public MoviePage(int id)
         {
             InitializeComponent();
@@ -47,7 +50,9 @@ namespace Kino.Desktop.Views
 
             if (Context.СurrentUser == null)
             {
+                panelAddRating.Visibility = Visibility.Collapsed;
                 panelAction.Visibility = Visibility.Collapsed;
+                panelAddComment.Visibility = Visibility.Collapsed;
                 return;
             }
 
@@ -90,12 +95,39 @@ namespace Kino.Desktop.Views
 
         private void btnEditTitle_Click(object sender, RoutedEventArgs e)
         {
-            //Логика перехода на страницу редактирования
+            NavigationService.Navigate(new AddMoviePage(title.Id));
         }
 
         private async void btnDeleteTitle_Click(object sender, RoutedEventArgs e)
         {
             await Context.apiClient.DeleteTitle(title.Id);
+            NavigationService.GoBack();
+        }
+
+        private void tbRating_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (int.TryParse(tbRating.Text, out int rating))
+            {
+                if (rating < 1)
+                    tbRating.Text = "1"; 
+                else if (rating > 5)
+                    tbRating.Text = "5";
+            }
+        }
+
+        private void tbRating_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!int.TryParse(e.Text, out int number))
+                e.Handled = true;
+        }
+
+        private async void btnSubmitRating_Click(object sender, RoutedEventArgs e)
+        {
+            if (!tbRating.Text.IsNullOrEmpty())
+            {
+                await Context.apiClient.RateTitle(title.Id, int.Parse(tbRating.Text));
+                panelAddRating.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

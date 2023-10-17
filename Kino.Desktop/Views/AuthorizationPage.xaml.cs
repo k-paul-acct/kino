@@ -54,6 +54,24 @@ namespace Kino.Desktop.Views
                 return;
             }
 
+            var window = Application.Current.MainWindow;
+            if (window != null)
+            {
+                Button btnAddMovie = FindVisualChild<Button>(window, "btnAddMovie");
+                Button btnFavorites = FindVisualChild<Button>(window, "btnFavorites");
+
+                switch (Context.СurrentUser.Role.Id)
+                {
+                    case 1:
+                        if (btnAddMovie != null) btnAddMovie.Visibility = Visibility.Collapsed;
+                        if (btnFavorites != null) btnFavorites.Visibility = Visibility.Visible;
+                        break;
+                    case 2:
+                        if (btnAddMovie != null) btnAddMovie.Visibility = Visibility.Visible;
+                        if (btnFavorites != null) btnFavorites.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
             this.NavigationService.Navigate(new ProfilePage());
         }
 
@@ -72,6 +90,23 @@ namespace Kino.Desktop.Views
         {
             if (pbPassword.Password.Length == 0)
                 tbPassword.Visibility = Visibility.Visible;
+        }
+
+        private T FindVisualChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typedChild && (child as FrameworkElement)?.Name == childName)
+                    return typedChild;
+                else
+                {
+                    var result = FindVisualChild<T>(child, childName);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
         }
     }
 }

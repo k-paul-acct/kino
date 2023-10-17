@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Kino.Desktop.Views
@@ -29,6 +30,16 @@ namespace Kino.Desktop.Views
         {
             this.NavigationService.Navigate(new AuthorizationPage());
             Context.СurrentUser = null;
+
+            var window = Application.Current.MainWindow;
+            if (window != null)
+            {
+                Button btnAddMovie = FindVisualChild<Button>(window, "btnAddMovie")!;
+                Button btnFavorites = FindVisualChild<Button>(window, "btnFavorites")!;
+
+                if (btnAddMovie != null) btnAddMovie.Visibility = Visibility.Collapsed;
+                if (btnFavorites != null) btnFavorites.Visibility = Visibility.Collapsed;
+            }
         }
 
         private async void btnSetPhoto_Click(object sender, RoutedEventArgs e)
@@ -43,6 +54,23 @@ namespace Kino.Desktop.Views
             imgProfile.Source = new BitmapImage(new Uri(tbImgUrl.Text));
             tbImgUrl.Text = string.Empty;
 
+        }
+
+        private T? FindVisualChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typedChild && (child as FrameworkElement)?.Name == childName)
+                    return typedChild;
+                else
+                {
+                    var result = FindVisualChild<T>(child, childName);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
         }
     }
 }

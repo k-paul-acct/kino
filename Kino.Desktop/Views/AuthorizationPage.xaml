@@ -33,12 +33,14 @@
                            FontSize="30"/>
                 <Separator Opacity="0" Height="20"/>
                 <TextBox Tag="Логин"
-                         x:Name="tbLogin"/>
+                         x:Name="tbLogin"
+                         MaxLength="32"/>
                 <Separator Opacity="0" Height="20"/>
                 <Grid>
                     <PasswordBox Tag="Пароль"
                                  x:Name="pbPassword"
-                                 LostFocus="pbPassword_LostFocus"/>
+                                 LostFocus="pbPassword_LostFocus"
+                                 MaxLength="32"/>
                     <TextBox Tag="Пароль"
                              x:Name="tbPassword"
                              GotFocus="tbPassword_GotFocus"/>

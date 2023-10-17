@@ -15,7 +15,7 @@ namespace Kino.Desktop.Views
     /// </summary>
     public partial class MovieListPage : Page
     {
-        HashSet<int> genres = new HashSet<int>();
+        private HashSet<int> genres = new HashSet<int>();
         public MovieListPage()
         {
             InitializeComponent();

@@ -32,6 +32,7 @@
             </ComboBox>
             <TextBox x:Name="tbSearch"
                      Width="300"
+                     MaxLength="100"
                      Tag="Название.."/>
             <ComboBox Template="{DynamicResource ComboBoxTemplate}"
                       x:Name="cbSortMode"

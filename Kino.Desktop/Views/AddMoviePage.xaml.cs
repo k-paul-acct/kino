@@ -17,7 +17,7 @@ namespace Kino.Desktop.Views
     {
         HashSet<int> genres = new HashSet<int>();
         List<GenreDto> genresActual = new List<GenreDto>();
-        List<GenreDto> genresInfo;
+        List<GenreDto> genresInfo = new List<GenreDto>();
         public AddMoviePage()
         {
             InitializeComponent();
@@ -66,6 +66,13 @@ namespace Kino.Desktop.Views
             await Context.apiClient.CreateTitle(titel);
             MessageBox.Show("Вы добавили фильм на площадку", "Успешно", MessageBoxButton.OK);
             NavigationService.Navigate(new MovieListPage());
+        }
+
+        private void btnResetGenre_Click(object sender, RoutedEventArgs e)
+        {
+            icGenres.ItemsSource = null;
+            genres.Clear();
+            genresActual.Clear();
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Kino.Desktop
             if (Context.СurrentUser != null)
             {
                 mainFrame.NavigationService.Navigate(new ProfilePage());
+                return;
             }
             mainFrame.NavigationService.Navigate(new AuthorizationPage());
         }

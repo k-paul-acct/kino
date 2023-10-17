@@ -29,14 +29,17 @@
                     HorizontalAlignment="Center"
                     Width="400">
             <TextBox Tag="Логин"
-                     x:Name="tbLogin"/>
+                     x:Name="tbLogin"
+                     MaxLength="32"/>
             <Separator Opacity="0" Height="20"/>
             <TextBox Tag="Почта"
-                     x:Name="tbEmail"/>
+                     x:Name="tbEmail"
+                     MaxLength="32"/>
             <Separator Opacity="0" Height="20"/>
             <Grid>
                 <PasswordBox x:Name="pbPassword1"
-                             LostFocus="pbPassword1_LostFocus"/>
+                             LostFocus="pbPassword1_LostFocus"
+                             MaxLength="32"/>
                 <TextBox Tag="Пароль"
                          x:Name="tbPassword1"
                          GotFocus="tbPassword1_GotFocus"/>
@@ -44,7 +47,8 @@
             <Separator Opacity="0" Height="20"/>
             <Grid>
                 <PasswordBox x:Name="pbPassword2"
-                             LostFocus="pbPassword2_LostFocus"/>
+                             LostFocus="pbPassword2_LostFocus"
+                             MaxLength="32"/>
                 <TextBox Tag="Повтор пароля"
                          x:Name="tbPassword2"
                          GotFocus="tbPassword2_GotFocus"/>

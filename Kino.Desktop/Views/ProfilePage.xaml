@@ -17,6 +17,7 @@
         <StackPanel>
             <Image DockPanel.Dock="Left"
                    x:Name="imgProfile"
+                   Source="/Resources/Icons/icon_image.png"
                    Width="300"/>
             <Separator Opacity="0" Height="30"/>
             <TextBox x:Name="tbImgUrl"

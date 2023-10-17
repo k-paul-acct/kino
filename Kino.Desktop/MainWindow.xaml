@@ -51,14 +51,16 @@
                 </StackPanel>
             </Button>
             <Button x:Name="btnFavorites"
-                Click="btnFavorites_Click">
+                Click="btnFavorites_Click"
+                    Visibility="Collapsed">
                 <StackPanel>
                     <Image Source="\Resources\Icons\icon_favorites.png" Stretch="Uniform"/>
                     <TextBlock Text="Мое"/>
                 </StackPanel>
             </Button>
             <Button x:Name="btnAddMovie"
-                Click="btnAddMovie_Click">
+                Click="btnAddMovie_Click"
+                    Visibility="Collapsed">
                 <StackPanel>
                     <Image Source="\Resources\Icons\icon_add.png" Stretch="Uniform" Height="40" Width="40"/>
                     <TextBlock Text="Добавить фильм" TextWrapping="Wrap"/>

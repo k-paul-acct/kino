@@ -7,7 +7,114 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1400">
 
-    <Grid>
-        
-    </Grid>
+    <Page.Resources>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource btnStyle}">
+            <Setter Property="Height" Value="40"/>
+        </Style>
+    </Page.Resources>
+
+    <StackPanel>
+        <WrapPanel Margin="10" Visibility="Collapsed">
+            <ComboBox Template="{DynamicResource ComboBoxTemplate}" 
+                  x:Name="cbCategories"
+                  Tag="Жанр"
+                  FontSize="20"
+                  DisplayMemberPath="Name" SelectedValuePath="Id">
+                <ComboBox.Resources>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}" />
+                    </Style>
+                </ComboBox.Resources>
+            </ComboBox>
+            <TextBox x:Name="tbSearch"
+                 Width="300"
+                 Tag="Название.."/>
+            <ComboBox Template="{DynamicResource ComboBoxTemplate}"
+                  x:Name="cbSortMode"
+                  Tag="Сортировать"
+                  FontSize="20">
+                <ComboBox.Resources>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}" />
+                        <Setter Property="Foreground" Value="Black" />
+                    </Style>
+                </ComboBox.Resources>
+                <ComboBoxItem Content="Дата &#8593;"/>
+                <ComboBoxItem Content="Дата &#8595;"/>
+            </ComboBox>
+            <Button x:Name="btnSearch"
+                Content="Найти"
+                Click="btnSearch_Click"
+                Width="200"
+                Margin="0,0,10,0" Cursor="Hand"/>
+            <Button x:Name="btnSearchReset"
+                Content="Сбросить поиск"
+                Click="btnSearchReset_Click"
+                Width="200"/>
+        </WrapPanel>
+        <ListView x:Name="lvMovies" 
+              DockPanel.Dock="Top"
+              HorizontalAlignment="Center"
+              BorderThickness="0 0 0 0"
+              Margin="10"
+              BorderBrush="Transparent"
+              Background="Transparent"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              SelectionChanged="lvMovies_SelectionChanged">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="200" Height="350"
+                    BorderBrush="Transparent"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Padding="3">
+                        <StackPanel>
+                            <Grid Height="300">
+                                <Image Source="{Binding ImageUrl}"
+                                    Height="300"/>
+                                <DockPanel>
+                                    <DockPanel DockPanel.Dock="Left" LastChildFill="False">
+                                        <Grid DockPanel.Dock="Top">
+                                            <Border Background="Red" CornerRadius="10" HorizontalAlignment="Left"
+                                                Width="50"
+                                                Margin="20">
+                                                <TextBlock Text="{Binding Year}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                            </Border>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Border Background="Gray" CornerRadius="10" HorizontalAlignment="Left"
+                                                Margin="20">
+                                                <Grid>
+                                                    <TextBlock Text="{Binding CommentsNumber}"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                           Foreground="White"
+                                                           Margin="25,0,10,0"/>
+                                                    <Image Source="\Resources\Icons\icon_comment.png"
+                                                       Width="25" Height="25"
+                                                       HorizontalAlignment="Left"/>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </DockPanel>
+                                </DockPanel>
+                            </Grid>
+                            <TextBlock Text="{Binding Name}"
+                                   FontWeight="Bold"
+                                   FontSize="16"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
 </Page>

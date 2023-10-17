@@ -94,7 +94,7 @@ namespace Kino.Desktop.Views
                 return;
             }
 
-            MessageBox.Show("Ошибка");
+            MessageBox.Show("Зарегистрироваться под таким логином не удалось" , "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 
         }
 

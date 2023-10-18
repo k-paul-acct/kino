@@ -1,13 +1,17 @@
 ﻿using Kino.Mobile.Pages;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using System.Net;
 
-namespace Kino.Mobile;
-
-public partial class AppShell
+namespace Kino.Mobile
 {
-    public AppShell()
+    public partial class AppShell : Shell
     {
-        InitializeComponent();
-        
-        Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
+        public AppShell()
+        {
+            InitializeComponent();
+
+            Routing.RegisterRoute(nameof(AuthorizationPage), typeof(AuthorizationPage));
+            Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
+        }
     }
 }

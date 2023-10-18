@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kino.Mobile.Pages.AuthorizationPage"
+             Shell.BackgroundColor="#070720"
+             Background="#0b0c2a">
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="Title"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="Title"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Margin="20,0,20,10"
+                         HorizontalOptions="Center">
+        <Grid HeightRequest="100"
+              Margin="-200,0,-200,10">
+            <Image Source="normal_breadcrumb.jpg"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            <Label Text="Авторизация" FontSize="30"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Grid>
+        <Entry x:Name="tbLogin" Placeholder="Логин..." 
+               FontSize="Title"
+               Margin="0,0,0,10"/>
+        <Entry x:Name="tbPassword" Placeholder="Пароль..." 
+               FontSize="Title" IsPassword="True"/>
+        <Button x:Name="btnSignIn" Text="Войти"
+                Margin="0,20,0,0"
+                Clicked="btnSignIn_Clicked"/>
+        <Rectangle HeightRequest="10"
+                   Fill="#3c3d55"
+                   Margin="0,20,0,20"/>
+        <Label Text="У вас нет аккаунта?"
+               HorizontalOptions="Center"
+               FontSize="30"/>
+        <Button x:Name="btnSignUp" Text="Зарегистрироваться"
+                Margin="0,20,0,0"
+                Clicked="btnSignUp_Clicked"
+                Grid.Column="0"/>
+    </VerticalStackLayout>
+</ContentPage>

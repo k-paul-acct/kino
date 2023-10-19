@@ -5,10 +5,55 @@
              Title="Мое"
              Shell.BackgroundColor="#070720"
              Background="#0b0c2a">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <CollectionView x:Name="cvMovie"
+                        SelectionMode="Single"
+                        SelectionChanged="cvMovie_SelectionChanged">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                 Span="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Grid>
+                                <Image Source="{Binding ImageUrl}"
+                                   HeightRequest="250"/>
+                                <Grid HorizontalOptions="StartAndExpand"
+                                  VerticalOptions="StartAndExpand"
+                                  HeightRequest="40">
+                                    <Border Background="Red"
+                                        Padding="5">
+                                        <Label Text="{Binding Year}" 
+                                           TextColor="White"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <Grid HorizontalOptions="StartAndExpand"
+                                  VerticalOptions="EndAndExpand"
+                                  HeightRequest="40">
+                                    <Border Background="Gray"
+                                        Padding="5">
+                                        <FlexLayout>
+                                            <Image Source="icon_comment.png"
+                                               WidthRequest="25" 
+                                               HeightRequest="25"/>
+                                            <Label Text="{Binding CommentsNumber}"
+                                               TextColor="White"
+                                               VerticalOptions="Center"/>
+                                        </FlexLayout>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                            <Label Text="{Binding Name}"
+                               FontAttributes="Bold"
+                               FontSize="16"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ContentPage.Content>
 </ContentPage>

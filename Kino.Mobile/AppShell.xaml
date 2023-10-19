@@ -13,7 +13,7 @@
         <Tab Title="Фильмы" Icon="icon_movie_list.png" x:Name="tab1">
             <ShellContent ContentTemplate="{DataTemplate views:MovieListPage}" />
         </Tab>
-        <Tab Title="Мое" Icon="icon_favorites.png">
+        <Tab Title="Мое" Icon="icon_favorites.png" x:Name="favorites">
             <ShellContent ContentTemplate="{DataTemplate views:FavoritesPage}" />
         </Tab>
         <Tab Title="Профиль" Icon="icon_profile.png">

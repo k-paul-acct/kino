@@ -16,7 +16,7 @@ public partial class ProfilePage : ContentPage
 
         if (Context.ÑurrentUser == null)
         {
-            Shell.Current.GoToAsync(nameof(AuthorizationPage));
+            await Shell.Current.GoToAsync(nameof(AuthorizationPage));
             return;
         }
 

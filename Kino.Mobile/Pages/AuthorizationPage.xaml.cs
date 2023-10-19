@@ -41,6 +41,10 @@ public partial class AuthorizationPage : ContentPage
             await DisplayAlert("ќшибка", "¬ход не удалс€", "OK");
             return;
         }
+
+        var element = Shell.Current.FindByName<Tab>("favorites");
+        element.IsVisible = true;
+
         await Shell.Current.Navigation.PopAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Kino.Mobile.Pages;
+﻿using Kino.Mobile.Models;
+using Kino.Mobile.Pages;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using System.Net;
 
@@ -10,8 +11,13 @@ namespace Kino.Mobile
         {
             InitializeComponent();
 
+            if (Context.СurrentUser == null ) 
+            {
+                favorites.IsVisible = false;
+            }
             Routing.RegisterRoute(nameof(AuthorizationPage), typeof(AuthorizationPage));
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
+            Routing.RegisterRoute(nameof(MoviePage), typeof(MoviePage));
         }
     }
 }

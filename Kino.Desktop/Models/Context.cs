@@ -9,7 +9,7 @@ namespace Kino.Desktop.Models
 {
     public static class Context
     {
-        public static ApiClient.ApiClient apiClient = new ApiClient.ApiClient("http://localhost:5012/api/");
+        public static ApiClient.ApiClient apiClient = new ApiClient.ApiClient("https://5bb3-95-26-77-191.ngrok-free.app/api/");
         public static ApiClient.Dto.UserDto? СurrentUser = null;
 
     }

@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -83,15 +84,21 @@ namespace Kino.Desktop.Views
 
         private async void btnAddMovie_Click(object sender, RoutedEventArgs e)
         {
+            var errorMessage = string.Empty;
+
             if (tbName.Text.IsNullOrEmpty() || tbDescription.Text.IsNullOrEmpty() || tbYear.Text.IsNullOrEmpty())
-            {
-                MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                errorMessage += "Заполните все поля\n";
+
+            int a;
+            if (!(int.TryParse(tbYear.Text, out a) && a > 1895 && a < DateTime.Now.Year))
+                errorMessage += "Неккоректная дата у фильма\n";
 
             if (tbImgUrl.Text.IsNullOrEmpty() && isEdit == false)
+                errorMessage += "Установите фото";
+
+            if (!errorMessage.IsNullOrEmpty())
             {
-                MessageBox.Show("Установите фото", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -132,6 +139,19 @@ namespace Kino.Desktop.Views
             icGenres.ItemsSource = null;
             genres.Clear();
             genresActual.Clear();
+        }
+
+        private void tbYear_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!IsNumericInput(e.Text))
+            {
+                e.Handled = true; 
+            }
+        }
+
+        private bool IsNumericInput(string text)
+        {
+            return Regex.IsMatch(text, "^[0-9]+$");
         }
     }
 }

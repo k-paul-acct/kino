@@ -44,6 +44,9 @@ namespace Kino.Desktop.Views
 
         private async void btnSetPhoto_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(tbImgUrl.Text))
+                return;
+
             var provile = new UpdateProfileRequest()
             {
                 Id = Context.СurrentUser.Id,

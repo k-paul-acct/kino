@@ -12,7 +12,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
 
         <!-- Display name -->
-        <ApplicationTitle>Kino.Mobile</ApplicationTitle>
+        <ApplicationTitle>KinoRev</ApplicationTitle>
 
         <!-- App Identifier -->
         <ApplicationId>com.companyname.kino.mobile</ApplicationId>

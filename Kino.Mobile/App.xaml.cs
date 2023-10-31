@@ -1,11 +1,15 @@
-﻿namespace Kino.Mobile;
+﻿using Kino.Mobile.Pages;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
-public partial class App
+namespace Kino.Mobile
 {
-    public App()
+    public partial class App : Application
     {
-        InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
 
-        MainPage = new AppShell();
+            MainPage = new AppShell();
+        }
     }
 }

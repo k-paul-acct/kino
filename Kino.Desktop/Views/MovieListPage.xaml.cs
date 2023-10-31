@@ -51,8 +51,36 @@ namespace Kino.Desktop.Views
         {
             genres.Add(cbCategories.SelectedIndex + 1);
             lvMovies.ItemsSource = null;
-            lvMovies.ItemsSource = (await Context.apiClient.GetTitles(tbSearch.Text, genres)).ToList();
+            var list = (await Context.apiClient.GetTitles(tbSearch.Text, genres)).ToList();
+            lvMovies.ItemsSource = list;
             genres.Clear();
+
+            switch (cbSortMode.SelectedIndex)
+            {
+                case 0:
+                    lvMovies.ItemsSource = null;
+                    lvMovies.ItemsSource = list.OrderBy(movie => movie.Year).ToList();
+                    break;
+                case 1:
+                    lvMovies.ItemsSource = null;
+                    lvMovies.ItemsSource = list.OrderByDescending(movie => movie.Year).ToList();
+                    break;
+            }
+        }
+
+        private async void cbSortMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (cbSortMode.SelectedIndex)
+            {
+                case 0:
+                    lvMovies.ItemsSource = null;
+                    lvMovies.ItemsSource = (await Context.apiClient.GetTitles(tbSearch.Text, genres)).OrderBy(movie => movie.Year).ToList();
+                    break;
+                case 1:
+                    lvMovies.ItemsSource = null;
+                    lvMovies.ItemsSource = (await Context.apiClient.GetTitles(tbSearch.Text, genres)).OrderByDescending(movie => movie.Year).ToList();
+                    break;
+            }
         }
     }
 }

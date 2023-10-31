@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kino.Mobile.Pages.ProfilePage"
+             Shell.BackgroundColor="#070720"
+             Background="#0b0c2a"
+             Title="Профиль">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="Title"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Margin="20,0,20,0">
+        <Image x:Name="imgProfile"
+               Source="/Resources/Icons/icon_image.png"
+               WidthRequest="300"/>
+        <Entry x:Name="tbImgUrl"
+               Placeholder="Image Url"
+               Margin="0,0,0,10"/>
+        <Button x:Name="btnSetPhoto"
+                Text="Установить фото" 
+                Clicked="btnSetPhoto_Clicked"/>
+        <Label x:Name="lbLogin"
+               Text="Логин"
+               FontSize="30"/>
+        <Label x:Name="lbEmail"
+               Text="Почта"
+               FontSize="30"/>
+        <Button x:Name="btnExit"
+                Clicked="btnExit_Clicked"
+                Text="Выйти"
+                Margin="0,10,0,0"/>
+    </VerticalStackLayout>
+</ContentPage>

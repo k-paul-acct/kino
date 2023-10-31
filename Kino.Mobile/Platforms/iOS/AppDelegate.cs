@@ -1,13 +1,10 @@
 ﻿using Foundation;
 
-// ReSharper disable once CheckNamespace
-namespace Kino.Mobile;
-
-[Register("AppDelegate")]
-public class AppDelegate : MauiUIApplicationDelegate
+namespace Kino.Mobile
 {
-    protected override MauiApp CreateMauiApp()
+    [Register("AppDelegate")]
+    public class AppDelegate : MauiUIApplicationDelegate
     {
-        return MauiProgram.CreateMauiApp();
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
     }
 }

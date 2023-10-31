@@ -18,45 +18,6 @@
     </Page.Resources>
 
     <StackPanel>
-        <WrapPanel Margin="10" Visibility="Collapsed">
-            <ComboBox Template="{DynamicResource ComboBoxTemplate}" 
-                  x:Name="cbCategories"
-                  Tag="Жанр"
-                  FontSize="20"
-                  DisplayMemberPath="Name" SelectedValuePath="Id">
-                <ComboBox.Resources>
-                    <Style TargetType="ComboBoxItem">
-                        <Setter Property="Foreground" Value="Black" />
-                        <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}" />
-                    </Style>
-                </ComboBox.Resources>
-            </ComboBox>
-            <TextBox x:Name="tbSearch"
-                 Width="300"
-                 Tag="Название.."/>
-            <ComboBox Template="{DynamicResource ComboBoxTemplate}"
-                  x:Name="cbSortMode"
-                  Tag="Сортировать"
-                  FontSize="20">
-                <ComboBox.Resources>
-                    <Style TargetType="ComboBoxItem">
-                        <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}" />
-                        <Setter Property="Foreground" Value="Black" />
-                    </Style>
-                </ComboBox.Resources>
-                <ComboBoxItem Content="Дата &#8593;"/>
-                <ComboBoxItem Content="Дата &#8595;"/>
-            </ComboBox>
-            <Button x:Name="btnSearch"
-                Content="Найти"
-                Click="btnSearch_Click"
-                Width="200"
-                Margin="0,0,10,0" Cursor="Hand"/>
-            <Button x:Name="btnSearchReset"
-                Content="Сбросить поиск"
-                Click="btnSearchReset_Click"
-                Width="200"/>
-        </WrapPanel>
         <ListView x:Name="lvMovies" 
               DockPanel.Dock="Top"
               HorizontalAlignment="Center"
